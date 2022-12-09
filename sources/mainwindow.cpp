@@ -3,22 +3,6 @@
 #include "QLabel"
 #include <QDebug>
 
-#define LINE_A  0
-#define LINE_B  116
-#define LINE_C  230
-#define LINE_D  345
-#define LINE_E  459
-#define LINE_F  574
-#define LINE_G  688
-
-#define LINE_1  0
-#define LINE_2  114
-#define LINE_3  229
-#define LINE_4  343
-#define LINE_5  457
-#define LINE_6  572
-#define LINE_7  687
-
 #define RED     true
 #define BLUE    false
 
@@ -42,38 +26,60 @@ MainWindow::MainWindow(QWidget *parent)
     }
     this->turn = RED;
     findMoves(this->turn);
-
 }
 
 void MainWindow::moveUser(int x, int y, int User){
+    int xArr[7] = {0,116,230,345,459,574,688};
+    int yArr[7] = {0,114,229,343,457,572,687};
     if(User){
-        this->ui->Red->setGeometry(x,y,112,112);
+        this->ui->Red->setGeometry(xArr[x-1],yArr[y-1],112,112);
     }
     else{
-        this->ui->Blue->setGeometry(x,y,112,112);
+        this->ui->Blue->setGeometry(xArr[x-1],yArr[y-1],112,112);
     }
 }
 
 void MainWindow::deleteTile(int x, int y){
-    qDebug() << "Çalıştı";
+
+    int xArr[7] = {0,116,230,345,459,574,688};
+    int yArr[7] = {0,114,229,343,457,572,687};
     QLabel *label = new QLabel(this);
     label->setStyleSheet("border-image: url(:/other/cross.jpg);");
-    label->raise();
-    label->setGeometry(x,y,112,112);
-
+    label->setGeometry(xArr[x-1],yArr[y-1],112,112);
+    label->show();
 };
 
 bool MainWindow::playTurn(bool user){
-    qDebug() << user;
     if(user){       //RED plays
         this->ui->Turn->setText(QString::fromStdString("Blue's Turn"));
         string deleteString=this->ui->DeleteBox->currentText().toStdString();
-
+        switch (deleteString.at(0)) {
+            case 'A':
+                deleteTile(1,deleteString.at(2)-'0');
+            break;
+            case 'B':
+                deleteTile(2,deleteString.at(2)-'0');
+            break;
+            case 'C':
+                deleteTile(3,deleteString.at(2)-'0');
+            break;
+            case 'D':
+                deleteTile(4,deleteString.at(2)-'0');
+            break;
+            case 'E':
+                deleteTile(5,deleteString.at(2)-'0');
+            break;
+            case 'F':
+                deleteTile(6,deleteString.at(2)-'0');
+            break;
+            case 'G':
+                deleteTile(7,deleteString.at(2)-'0');
+            break;
+        }
         this->turn = !user;
     }
     else{           //BLUE plays
         this->ui->Turn->setText(QString::fromStdString("Red's Turn"));
-        this->deleteTile(LINE_A,LINE_1);
         this->turn = !user;
     }
 }
