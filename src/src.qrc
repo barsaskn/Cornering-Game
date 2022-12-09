@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/board/grid">
+        <file>Grid.png</file>
+    </qresource>
+    <qresource prefix="/user">
+        <file>red.jpg</file>
+        <file>blue.jpg</file>
+    </qresource>
+    <qresource prefix="/other">
+        <file>cross.jpg</file>
+    </qresource>
+</RCC>
