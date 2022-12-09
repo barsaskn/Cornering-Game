@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
     findMoves(this->turn);
 }
 
-void MainWindow::moveUser(int x, int y, int User){
+void MainWindow::moveUser(int x, int y, bool User){
     int xArr[7] = {0,116,230,345,459,574,688};
     int yArr[7] = {0,114,229,343,457,572,687};
     if(User){
@@ -36,6 +36,12 @@ void MainWindow::moveUser(int x, int y, int User){
     }
     else{
         this->ui->Blue->setGeometry(xArr[x-1],yArr[y-1],112,112);
+    }
+    if(User){
+        this->redUserCoordinate = new Coordinate(x,y);
+    }
+    else{
+        this->blueUserCoordinate = new Coordinate(x,y);
     }
 }
 
@@ -50,8 +56,6 @@ void MainWindow::deleteTile(int x, int y){
 };
 
 bool MainWindow::playTurn(bool user){
-    if(user){       //RED plays
-        this->ui->Turn->setText(QString::fromStdString("Blue's Turn"));
         string deleteString=this->ui->DeleteBox->currentText().toStdString();
         switch (deleteString.at(0)) {
             case 'A':
@@ -76,14 +80,39 @@ bool MainWindow::playTurn(bool user){
                 deleteTile(7,deleteString.at(2)-'0');
             break;
         }
-        this->turn = !user;
+        string moveString=this->ui->MoveBox->currentText().toStdString();
+        switch (moveString.at(0)) {
+            case 'A':
+                moveUser(1,moveString.at(2)-'0',user);
+            break;
+            case 'B':
+                moveUser(2,moveString.at(2)-'0',user);
+            break;
+            case 'C':
+                moveUser(3,moveString.at(2)-'0',user);
+            break;
+            case 'D':
+                moveUser(4,moveString.at(2)-'0',user);
+            break;
+            case 'E':
+                moveUser(5,moveString.at(2)-'0',user);
+            break;
+            case 'F':
+                moveUser(6,moveString.at(2)-'0',user);
+            break;
+            case 'G':
+                moveUser(7,moveString.at(2)-'0', user);
+            break;
+        }
+
+    if(user){       //RED plays
+        this->ui->Turn->setText(QString::fromStdString("Blue's Turn"));
     }
     else{           //BLUE plays
         this->ui->Turn->setText(QString::fromStdString("Red's Turn"));
-        this->turn = !user;
     }
+    this->turn = !this->turn;
 }
-
 MainWindow::~MainWindow()
 {
     delete ui;

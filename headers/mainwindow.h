@@ -16,7 +16,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
 
-    void moveUser(int x, int y, int User);
+    void moveUser(int x, int y, bool User);
 
     void deleteTile(int x, int y);
 
