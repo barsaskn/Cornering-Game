@@ -1,0 +1,7 @@
+CorneringGame
+*.o
+moc_*
+qrc_*
+ui_*
+.DS_Store
+*.user
