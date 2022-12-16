@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "coordinate.h"
+#include <list>
 
 using namespace std;
 QT_BEGIN_NAMESPACE
@@ -31,6 +32,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
+    list<Coordinate> bannedCoordinates;
 
     Coordinate* availableCoordinates[49];
 

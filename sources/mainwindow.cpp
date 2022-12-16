@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "QLabel"
 #include <QDebug>
+#include <QStringListModel>
 
 #define RED     true
 #define BLUE    false
@@ -53,6 +54,7 @@ void MainWindow::deleteTile(int x, int y){
     label->setStyleSheet("border-image: url(:/other/cross.jpg);");
     label->setGeometry(xArr[x-1],yArr[y-1],112,112);
     label->show();
+    bannedCoordinates.push_back(Coordinate(x,y));
 };
 
 bool MainWindow::playTurn(bool user){
@@ -239,6 +241,23 @@ void MainWindow::findMoves(bool user){
         this->ui->MoveBox->addItem(QString::fromStdString(down->getString()));
         Coordinate* downLeft = new Coordinate(x-1,y-1);
         this->ui->MoveBox->addItem(QString::fromStdString(downLeft->getString()));
+    }
+    QStringList itemsInComboBox;
+    for (int index = 0; index < ui->MoveBox->count(); index++){
+        itemsInComboBox << ui->MoveBox->itemText(index);
+    }
+    for (int i=0; i<itemsInComboBox.length();i++){//QString i:itemsInComboBox){
+        if(this->redUserCoordinate->getString() == itemsInComboBox[i].toStdString() || this->blueUserCoordinate->getString() == itemsInComboBox[i].toStdString()){
+            this->ui->MoveBox->removeItem(i);
+        }
+    }
+    for (int i=0; i<itemsInComboBox.length();i++){
+        for(Coordinate j:bannedCoordinates){
+            if(itemsInComboBox[i].toStdString() == j.getString()){
+                   this->ui->MoveBox->removeItem(i);
+            }
+        }
+
     }
 }
 
