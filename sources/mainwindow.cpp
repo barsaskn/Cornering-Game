@@ -114,7 +114,24 @@ bool MainWindow::playTurn(bool user){
         this->ui->Turn->setText(QString::fromStdString("Red's Turn"));
     }
     this->turn = !this->turn;
+    this->renderDeleteBox();
 }
+
+void MainWindow::renderDeleteBox(){
+    QStringList itemsInComboBox;
+    for (int index = 0; index < ui->DeleteBox->count(); index++){
+        itemsInComboBox << ui->DeleteBox->itemText(index);
+    }
+    for (int i=0; i<itemsInComboBox.length();i++){
+        for(Coordinate j:bannedCoordinates){
+            if(itemsInComboBox[i].toStdString() == j.getString()){
+                   this->ui->DeleteBox->removeItem(i);
+            }
+        }
+    }
+
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -257,7 +274,6 @@ void MainWindow::findMoves(bool user){
                    this->ui->MoveBox->removeItem(i);
             }
         }
-
     }
 }
 

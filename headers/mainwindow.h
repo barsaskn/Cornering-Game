@@ -25,6 +25,8 @@ public:
 
     void findMoves(bool user);
 
+    void renderDeleteBox();
+
     ~MainWindow();
 
 private slots:
